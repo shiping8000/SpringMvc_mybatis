@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boc.crm.dao.BillMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.boc.crm.domain.Bill" >
+	<result column="id" property="id" jdbcType="BIGINT"/>
+	<result column="amount" property="amount"  jdbcType="DOUBLE" />
+	<result column="ltl_exp" property="ltlExp"  jdbcType="DOUBLE"/>
+	<result column="terminal_no" property="terminalNo" jdbcType="VARCHAR"/>
+	<result column="terminal_name" property="terminalName" jdbcType="VARCHAR"/>
+	<result column="card_no" property="cardNo" jdbcType="VARCHAR"/>
+	<result column="merchant_id" property="merchantId" jdbcType="VARCHAR"/>
+	<result column="agent_id" property="agentId" jdbcType="VARCHAR"/>
+	<result column="status" property="status" jdbcType="CHAR"/>
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+</resultMap>  
+       
+<!-- t_bill table all fields -->
+<sql id="Base_Column_List" >
+	 id,amount,ltl_exp,terminal_no,terminal_name,card_no,merchant_id,agent_id,status,create_time
+</sql>
+   
+   
+   <!-- 插入记录 -->
+<!-- <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey> -->
+<insert id="add" parameterType="com.boc.crm.domain.Bill" >
+  insert into t_bill(id,amount,ltl_exp,terminal_no,terminal_name,card_no,merchant_id,agent_id,status,create_time)
+ values(#{id},#{amount},#{ltlExp},#{terminalNo},#{terminalName},#{cardNo},#{merchantId},#{agentId},#{status},now())
+</insert>
+   
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="com.boc.crm.domain.Bill" >
+  update t_bill set amount=#{amount},ltl_exp=#{ltlExp},terminal_no=#{terminalNo},terminal_name=#{terminalName},card_no=#{cardNo},merchant_id=#{merchantId},agent_id=#{agentId},status=#{status},create_time=now() where id=#{id}
+ </update>
+ 
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="java.lang.Integer">
+	delete 	 from t_bill where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 账单流水    <include refid="Base_Column_List" /> resultMap="BaseResultMap"  -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select *
+	 from t_bill where id = #{id}
+</select>
+
+  	
+<!-- 查询账单流水列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from t_bill 
+</select> 
+  	
+</mapper>   

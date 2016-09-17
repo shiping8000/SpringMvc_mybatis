@@ -1,0 +1,15 @@
+K 10
+svn:ignore
+V 98
+.settings
+.project
+target
+.classpath
+rebel.xml
+.mymetadata
+.externalToolBuilders
+bin
+logs
+classes
+
+END
